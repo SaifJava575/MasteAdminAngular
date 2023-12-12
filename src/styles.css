@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~ngx-toastr/toastr';
+@import "./assets/css/w3.css";
+@import "./assets/css/custom_New.css";
+/* @import '~ngx-spinner/animations/ball-beat.css'; */
+
+/*@import "~@ng-select/ng-select/themes/default.theme.css";
+/* @import "~@ng-select/ng-select/themes/material.theme.css"; */
+/* @import "~@ng-select/ng-select/themes/ant.design.theme.css"; */
+
+.w3-Verdana {
+  font-family: Calibri;
+}
+
+/* For ng-select dropdown */
+.ng-value-container .ng-value {
+  margin-top: 0;
+}
