@@ -32,7 +32,7 @@
           </div>
         </div>
       </div>
-  
+
       <div *ngIf="showRecord" class="col-md-12 p-3" style="overflow: auto; margin-bottom: 50px;">
         <table class="table table-bordered text-center">
           <thead class="thead-light" style="background: #9BADC5;">
@@ -55,7 +55,7 @@
                 <!--<button (click)="edit(data.headOfficeId)" class="btn btn-sm btn-primary">Edit</button>-->
               </td>
             </tr>
-  
+
             <!-- <tr>
               <td colspan="4">No Records Avaliable</td>
             </tr> -->
@@ -65,11 +65,11 @@
           <pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
         </div>
       </div>
-  
+
     </div>
   </div>
-  
-  
+
+
   <div [style.display]="showModal" class="w3-modal w3-animate-zoom">
     <div class="w3-modal-content w3-card-4">
       <header class="w3-container w3-blue">
@@ -97,34 +97,10 @@
       </div>
     </div>
   </div>
-  
-  
-  <!-- <div [style.display]="showDelete" class="w3-modal w3-animate-zoom">
-    <div class="w3-modal-content-delete w3-card-4">
-      <header class="w3-container w3-blue">
-        <span (click)="closeModal()" class="w3-button w3-large w3-display-topright">×</span>
-        <h3>Deactivate Head Office</h3>
-      </header>
-      <div class="w3-container">
-        <div class="row justify-content-center">
-          <div class="col-md-6 text-center">
-            <div class="form-group">
-              <label class="fw-bold">Are you sure?</label>
-            </div>
-          </div>
-        </div>
-        <div class="row text-center mt-3 mb-4">
-          <div class="col-12">
-            <button class="btn btn-danger" (click)="deactivateHeadOffice()">Yes</button>&nbsp;&nbsp;
-            <button class="btn btn-primary" (click)="closeModal()">No</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  
-  
-  
+
+
+
+
   <div [style.display]="editModal" class="w3-modal w3-animate-zoom">
     <div class="w3-modal-content w3-card-4">
       <header class="w3-container w3-blue">
@@ -162,4 +138,3 @@
       </div>
     </div>
   </div>
-  

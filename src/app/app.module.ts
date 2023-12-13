@@ -9,13 +9,15 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { HeadofficeComponent } from './headoffice/headoffice.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MasterZoneComponent } from './master-zone/master-zone.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeadofficeComponent
+    HeadofficeComponent,
+    MasterZoneComponent
    
   ],
   imports: [

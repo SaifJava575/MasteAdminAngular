@@ -10,8 +10,8 @@ export class MasterServiceService {
   constructor(private http:HttpClient) { }
 
   /* ----------------Head Office----------------------------*/
-  addHeadOffice(data :any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/add-headoffice`, data)
+   addHeadOffice(data :any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/add-headoffice`, data).pipe(map((result:any)=>{return result;}),catchError(this.errorHandler))
     }
 
     searchHeadOffice(data :any, page: number): Observable<any> {
@@ -19,6 +19,27 @@ export class MasterServiceService {
       return result;
     }), catchError(this.errorHandler));
   }
+
+  getAllHeadOffice(): Observable<any> {
+    return this.http.get( `${this.baseUrl}/get-all-headOffice`).pipe(map((result: any) => {
+      return result;
+    }), catchError(this.errorHandler));
+  }
+
+  // ----------------Zone----------------------------
+  addZone(data :any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/add-zone`, data).pipe(map((result: any) => {
+      return result;
+    }), catchError(this.errorHandler));
+  }
+
+  searchZone(data :any, page: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/searchMasterZone/`+ page, data).pipe(map((result: any) => {
+      return result;
+    }), catchError(this.errorHandler));
+  }
+
+
 
   errorHandler(error: any) {
     let errorMessage = '';
@@ -32,4 +53,4 @@ export class MasterServiceService {
   }
 
   }
-  
+

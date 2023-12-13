@@ -27,7 +27,7 @@ export class HeadofficeComponent {
   constructor(private toaster: ToastrService, private userService: MasterServiceService) { }
 
   ngOnInit() {
-    //this.userId = sessionStorage.getItem("userId");
+    this.userId = sessionStorage.getItem("userId");
     // this.getAllHeadOffice();
     this.search();
   }
