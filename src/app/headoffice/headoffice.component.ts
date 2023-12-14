@@ -80,6 +80,50 @@ export class HeadofficeComponent {
     })
   }
 
+  edit(headOfficeId: any) {
+    this.showCreate = false;
+    this.editModal = 'block';
+    this.userService.getHeadOfficeById(headOfficeId).subscribe((data: any) => {
+      this.headOfficeDataById = data[0];
+      this.enteredHeadOfficeName = this.headOfficeDataById.headOfficeName;
+      if (this.headOfficeDataById.activeFlag) {
+        this.selectedStatus = 'true';
+      }
+      else {
+        this.selectedStatus = 'false';
+      }
+    });
+  }
+
+
+  updateHeadOffice() {
+    if (this.enteredHeadOfficeName != '' && this.enteredHeadOfficeName != null) {
+      console.log(this.enteredHeadOfficeName)
+      let postData = null;
+      postData = {
+        "headOfficeId": this.headOfficeDataById.headOfficeId,
+        "activeFlag": this.selectedStatus == 'true' ? true : false,
+        "headOfficeName": this.enteredHeadOfficeName,
+        "updatedBy": this.userId
+      }
+      console.log(postData)
+      this.userService.updateHeadOffice(postData).subscribe((res: any) => {
+        if (res.status == 200) {
+          this.toaster.success(res.message);
+          this.closeModal();
+          this.search();
+        }
+        else {
+          this.toaster.error('Some error occurred.');
+        }
+      });
+    }
+    else {
+      this.toaster.error('Please enter Head Office Name')
+    }
+  }
+
+
   reset() {
     this.searchHeadOffice = null;
     this.selectedStatus = "";

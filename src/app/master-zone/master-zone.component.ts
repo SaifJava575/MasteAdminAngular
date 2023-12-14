@@ -92,6 +92,50 @@ export class MasterZoneComponent {
     })
   }
 
+  edit(zoneId: number) {
+    this.showCreate = false;
+    this.editModal = 'block';
+    this.masterService.getZoneById(zoneId).subscribe((data: any) => {
+      this.zoneDataById = data[0];
+      this.selectedHeadOffice = this.zoneDataById.headOfficeId;
+      this.enteredZoneName = this.zoneDataById.zoneName;
+      if (this.zoneDataById.activeFlag) {
+        this.selectedStatus = 'true';
+      }
+      else {
+        this.selectedStatus = 'false';
+      }
+    });
+  }
+
+  updateHeadOffice() {
+    let postData = {
+      "zoneId": this.zoneDataById.zoneId,
+      "zoneName": this.enteredZoneName,
+      "headOfficeId": this.selectedHeadOffice,
+      "activeFlag": this.selectedStatus == 'true' ? true : false,
+      "updatedBy": this.userId
+    }
+    console.log(postData)
+    this.masterService.updateZone(postData).subscribe((res: any) => {
+      if (res.status == 200) {
+        this.toaster.success(res.message);
+        this.closeModal();
+        this.search();
+      }
+      else {
+        this.toaster.error('Some error occurred.');
+      }
+    });
+  }
+
+
+  pageChange(event: any) {
+    console.log(event)
+    this.currentPageNo = event;
+    this.search();
+  }
+
   reset() {
     this.searchHeadOffice = null;
     this.selectedStatus = "";
