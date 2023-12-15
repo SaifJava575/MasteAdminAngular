@@ -10,6 +10,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { HeadofficeComponent } from './headoffice/headoffice.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MasterZoneComponent } from './master-zone/master-zone.component';
+import { MasterRegionComponent } from './master-region/master-region.component';
 
 
 
@@ -17,7 +18,8 @@ import { MasterZoneComponent } from './master-zone/master-zone.component';
   declarations: [
     AppComponent,
     HeadofficeComponent,
-    MasterZoneComponent
+    MasterZoneComponent,
+    MasterRegionComponent
    
   ],
   imports: [

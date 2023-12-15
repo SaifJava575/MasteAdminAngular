@@ -9,7 +9,7 @@ export class MasterServiceService {
   private baseUrl='http://localhost:5200/admin/';
   constructor(private http:HttpClient) { }
 
-  /* ----------------Head Office----------------------------*/
+  /* ----------------Master Head Office Integreted----------------------------*/
    addHeadOffice(data :any): Observable<any> {
     return this.http.post(`${this.baseUrl}/add-headoffice`, data).pipe(map((result:any)=>{return result;}),catchError(this.errorHandler))
     }
@@ -39,7 +39,7 @@ export class MasterServiceService {
     }), catchError(this.errorHandler));
   }
 
-  // ----------------Zone----------------------------
+  // ----------------Master Zone Api Integreted----------------------------
   addZone(data :any): Observable<any> {
     return this.http.post(`${this.baseUrl}/add-zone`, data).pipe(map((result: any) => {
       return result;
@@ -59,11 +59,46 @@ export class MasterServiceService {
     }), catchError(this.errorHandler));
   }
 
+  getZoneByHeadOfficeId(headOfficeId :any): Observable<any> {
+    const params = new HttpParams().set('headOfficeId', headOfficeId );
+    return this.http.get(`${this.baseUrl}/get-all-zone-by-headoffice-id`, { params }).pipe(map((result: any) => {
+      return result;
+    }), catchError(this.errorHandler));
+  }
+
   updateZone(data :any): Observable<any> {
     return this.http.put(`${this.baseUrl}/update-zone`, data).pipe(map((result: any) => {
       return result;
     }), catchError(this.errorHandler));
   }
+
+  //=========================Master Region Api Integreted =============================
+  addRegion(data :any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/add-region`, data).pipe(map((result: any) => {
+      return result;
+    }), catchError(this.errorHandler));
+  }
+
+  searchRegion(data :any, page: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/searchMasterRegion/` + page, data).pipe(map((result: any) => {
+      return result;
+    }), catchError(this.errorHandler));
+  }
+
+  getRegionById(regionId :any): Observable<any> {
+    const params = new HttpParams().set('regionId', regionId);
+    return this.http.get(`${this.baseUrl}/get-all-region-by-id`, { params }).pipe(map((result: any) => {
+      return result;
+    }), catchError(this.errorHandler));
+  }
+
+  updateRegion(data :any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/update-region`, data).pipe(map((result: any) => {
+      return result;
+    }), catchError(this.errorHandler));
+  }
+
+
 
   errorHandler(error: any) {
     let errorMessage = '';
