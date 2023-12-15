@@ -11,6 +11,7 @@ import { HeadofficeComponent } from './headoffice/headoffice.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MasterZoneComponent } from './master-zone/master-zone.component';
 import { MasterRegionComponent } from './master-region/master-region.component';
+import { MasterDepotComponent } from './master-depot/master-depot.component';
 
 
 
@@ -19,7 +20,8 @@ import { MasterRegionComponent } from './master-region/master-region.component';
     AppComponent,
     HeadofficeComponent,
     MasterZoneComponent,
-    MasterRegionComponent
+    MasterRegionComponent,
+    MasterDepotComponent
    
   ],
   imports: [

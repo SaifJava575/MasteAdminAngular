@@ -92,11 +92,53 @@ export class MasterServiceService {
     }), catchError(this.errorHandler));
   }
 
+  getRegionByZoneId(zoneId :any): Observable<any> {
+    const params = new HttpParams().set('zoneId', zoneId);
+    return this.http.get(`${this.baseUrl}/get-all-region-by-zone-id`, { params }).pipe(map((result: any) => {
+      return result;
+    }), catchError(this.errorHandler));
+  }
+
   updateRegion(data :any): Observable<any> {
     return this.http.put(`${this.baseUrl}/update-region`, data).pipe(map((result: any) => {
       return result;
     }), catchError(this.errorHandler));
   }
+
+ //=============== Master Depot Api Integreted ===============================
+
+ addDepot(data :any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/add-depot`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+searchDepot(data :any, page: number): Observable<any> {
+  return this.http.post(`${this.baseUrl}/searchdepot/` + page, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+getDepotById(depotId :any): Observable<any> {
+  const params = new HttpParams().set('depotId', depotId);
+  return this.http.get(`${this.baseUrl}/get-all-depot-by-id`, { params }).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+updateDepot(data :any): Observable<any> {
+  return this.http.put(`${this.baseUrl}/update-depot`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+
+
+
+
+
+
+
 
 
 
