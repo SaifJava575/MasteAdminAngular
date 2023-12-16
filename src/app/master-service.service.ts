@@ -132,14 +132,63 @@ updateDepot(data :any): Observable<any> {
   }), catchError(this.errorHandler));
 }
 
+//================== State Api Integreted =====================
+addState(data :any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/add-state`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
 
+searchState(data :any, page: number): Observable<any> {
+  return this.http.post(`${this.baseUrl}/getmasterstate/` + page, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
 
+getStateByStateCode(stateCode :any): Observable<any> {
+  const params = new HttpParams().set('stateCode', stateCode);
+  return this.http.get(`${this.baseUrl}/get-state-by-id`, { params }).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
 
+updateState(data :any): Observable<any> {
+  return this.http.put(`${this.baseUrl}/update-state`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
 
+getAllState(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/get-all-state`).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
 
+//============== District Api Inegreted ================
+addDistrict(data :any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/add-district`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
 
+searchDistrict(data :any, page: number): Observable<any> {
+  return this.http.post(`${this.baseUrl}/searchDistrict/` + page, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
 
+getDistrictByDistrictCode(districtCode :any): Observable<any> {
+  const params = new HttpParams().set('districtCode', districtCode);
+  return this.http.get(`${this.baseUrl}/get-all-district-by-id`, { params }).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
 
+updateDistrict(data :any): Observable<any> {
+  return this.http.put(`${this.baseUrl}/update-district`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
 
 
   errorHandler(error: any) {

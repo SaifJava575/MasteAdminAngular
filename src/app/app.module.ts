@@ -12,6 +12,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MasterZoneComponent } from './master-zone/master-zone.component';
 import { MasterRegionComponent } from './master-region/master-region.component';
 import { MasterDepotComponent } from './master-depot/master-depot.component';
+import { MasterStateComponent } from './master-state/master-state.component';
+import { MasterDistrictComponent } from './master-district/master-district.component';
+import { MasterUserRoleComponent } from './master-user-role/master-user-role.component';
 
 
 
@@ -21,7 +24,10 @@ import { MasterDepotComponent } from './master-depot/master-depot.component';
     HeadofficeComponent,
     MasterZoneComponent,
     MasterRegionComponent,
-    MasterDepotComponent
+    MasterDepotComponent,
+    MasterStateComponent,
+    MasterDistrictComponent,
+    MasterUserRoleComponent
    
   ],
   imports: [
