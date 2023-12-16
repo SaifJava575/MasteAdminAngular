@@ -3,11 +3,11 @@ import { MasterServiceService } from '../master-service.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-master-user-role',
-  templateUrl: './master-user-role.component.html',
-  styleUrls: ['./master-user-role.component.css']
+  selector: 'app-master-designation',
+  templateUrl: './master-designation.component.html',
+  styleUrls: ['./master-designation.component.css']
 })
-export class MasterUserRoleComponent {
+export class MasterDesignationComponent {
 
   showModal: String = 'none';
   editModal: String = 'none';
@@ -15,17 +15,17 @@ export class MasterUserRoleComponent {
   totalRecords: any;
   pageSize: number = 10;
   userId: any;
-  searchRole: any = null;
+  searchDesignation: any = null;
   searchStatus: String = "";
-  masterRole: any = null;
-  enteredRole: any = null;
+  masterDesignation: any = null;
+  enteredDesignation: any = null;
   enteredStatus: String = "";
-  roleDataById: any = null;
+  designationDataById: any = null;
 
-  constructor(private roleService:MasterServiceService,private toaster:ToastrService){}
+  constructor(private designationService:MasterServiceService,private toaster:ToastrService){}
 
   ngOnInit(){
-    this.userId = sessionStorage.getItem("userId");
+    this.userId=sessionStorage.getItem("userId");
     this.search();
   }
 
@@ -36,30 +36,30 @@ export class MasterUserRoleComponent {
 
   search() {
     let searchData = {
-      "roleName": this.searchRole,
+      "designationName": this.searchDesignation,
       "activeFlag": this.searchStatus == 'true' ? true : this.searchStatus == 'false' ? false : null
     }
     console.log(searchData)
-    this.roleService.searchRole(searchData, this.currentPageNo).subscribe((data: any) => {
-      this.masterRole = data.paginationListRecords;
-      console.log(this.masterRole)
+    this.designationService.searchDesignation(searchData, this.currentPageNo).subscribe((data: any) => {
+      this.masterDesignation = data.paginationListRecords;
+      console.log(this.masterDesignation)
       this.currentPageNo = data.currentPageNo;
       this.totalRecords = data.totalRecords;
       this.pageSize = data.pageLimit;
     })
   }
 
-  createRole() {
-    if (this.enteredRole != '' && this.enteredRole != null) {
+  createDesignation() {
+    if (this.enteredDesignation != '' && this.enteredDesignation != null) {
       let postData = {
         "activeFlag": true,
-        "roleName": this.enteredRole,
+        "designationName": this.enteredDesignation,
         "createdBy": this.userId,
         "updatedBy": this.userId
       }
       console.log(postData)
-      this.roleService.addRole(postData).subscribe((res: any) => {
-        if (res.status == 200) {
+      this.designationService.addDesignation(postData).subscribe((res: any) => {
+        if (res.status == 201) {
           this.toaster.success(res.message);
           this.closeModal();
           this.search();
@@ -70,16 +70,16 @@ export class MasterUserRoleComponent {
       });
     }
     else {
-      this.toaster.error('Please enter State Name')
+      this.toaster.error('Please enter Designation Name')
     }
   }
 
-  edit(roleId: any) {
+  edit(designationId: any) {
     this.editModal = 'block';
-    this.roleService.getRoleById(roleId).subscribe((data: any) => {
-      this.roleDataById = data[0];
-      this.enteredRole = this.roleDataById.roleName;
-      if (this.roleDataById.activeFlag) {
+    this.designationService.getDesignationById(designationId).subscribe((data: any) => {
+      this.designationDataById = data[0];
+      this.enteredDesignation = this.designationDataById.designationName;
+      if (this.designationDataById.activeFlag) {
         this.enteredStatus = 'true';
       }
       else {
@@ -88,17 +88,18 @@ export class MasterUserRoleComponent {
     });
   }
 
-  updateRole() {
-    if (this.enteredRole != '' && this.enteredRole != null) {
-      console.log(this.enteredRole)
+
+  updateDesignation() {
+    if (this.enteredDesignation != '' && this.enteredDesignation != null) {
+      console.log(this.enteredDesignation)
       let postData = {
-        "roleId": this.roleDataById.roleId,
+        "designationId": this.designationDataById.DesignationId,
         "activeFlag": this.enteredStatus == 'true' ? true : false,
-        "roleName": this.enteredRole,
+        "designationName": this.enteredDesignation,
         "updatedBy": this.userId
       }
       console.log(postData)
-      this.roleService.updateRole(postData).subscribe((res: any) => {
+      this.designationService.updateDesignation(postData).subscribe((res: any) => {
         if (res.status == 200) {
           this.toaster.success(res.message);
           this.closeModal();
@@ -110,14 +111,14 @@ export class MasterUserRoleComponent {
       });
     }
     else {
-      this.toaster.error('Please enter State Name')
+      this.toaster.error('Please enter Designation Name')
     }
   }
 
   reset() {
-    this.searchRole = null;
+    this.searchDesignation = null;
     this.searchStatus = "";
-    this.enteredRole = null;
+    this.enteredDesignation = null;
     this.enteredStatus = "";
   }
 
@@ -134,7 +135,7 @@ export class MasterUserRoleComponent {
   pageChange(event: any) {
     console.log(event)
     this.currentPageNo = event;
-    this.search();
+   this.search();
   }
 
 }

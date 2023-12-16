@@ -15,6 +15,7 @@ import { MasterDepotComponent } from './master-depot/master-depot.component';
 import { MasterStateComponent } from './master-state/master-state.component';
 import { MasterDistrictComponent } from './master-district/master-district.component';
 import { MasterUserRoleComponent } from './master-user-role/master-user-role.component';
+import { MasterDesignationComponent } from './master-designation/master-designation.component';
 
 
 
@@ -27,7 +28,8 @@ import { MasterUserRoleComponent } from './master-user-role/master-user-role.com
     MasterDepotComponent,
     MasterStateComponent,
     MasterDistrictComponent,
-    MasterUserRoleComponent
+    MasterUserRoleComponent,
+    MasterDesignationComponent
    
   ],
   imports: [

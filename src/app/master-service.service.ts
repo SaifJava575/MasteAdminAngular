@@ -190,6 +190,60 @@ updateDistrict(data :any): Observable<any> {
   }), catchError(this.errorHandler));
 }
 
+//============== Master User Role ===========================
+addRole(data :any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/add-role`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+searchRole(data :any, page: number): Observable<any> {
+  return this.http.post(`${this.baseUrl}/searchrole/` + page, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+getRoleById(roleId :any): Observable<any> {
+  const params = new HttpParams().set('roleId', roleId);
+  return this.http.get(`${this.baseUrl}/get-all-role-by-id`, { params }).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+updateRole(data :any): Observable<any> {
+  return this.http.put(`${this.baseUrl}/update-role`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+// ----------------Master-Designation Api Integreted ----------------------------
+addDesignation(data :any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/create-designation`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+searchDesignation(data :any, page: number): Observable<any> {
+  return this.http.post(`${this.baseUrl}/searchdesignation/` + page, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+getDesignationById(DesignationId :any): Observable<any> {
+  const params = new HttpParams().set('DesignationId', DesignationId);
+  return this.http.get(`${this.baseUrl}/get-all-designation-by-id`, { params }).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+
+updateDesignation(data :any): Observable<any> {
+  return this.http.put(`${this.baseUrl}/update-designation`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+
 
   errorHandler(error: any) {
     let errorMessage = '';
