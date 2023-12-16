@@ -8,6 +8,8 @@ import { MasterStateComponent } from './master-state/master-state.component';
 import { MasterDistrictComponent } from './master-district/master-district.component';
 import { MasterUserRoleComponent } from './master-user-role/master-user-role.component';
 import { MasterDesignationComponent } from './master-designation/master-designation.component';
+import { MasterUserComponent } from './master-user/master-user.component';
+import { CreateUserComponent } from './create-user/create-user.component';
 
 const routes: Routes = [
   { path: 'head-office', component: HeadofficeComponent },
@@ -18,7 +20,9 @@ const routes: Routes = [
   {path:'master-district',component:MasterDistrictComponent},
   {path:'master-role',component:MasterUserRoleComponent},
   {path:'master-designation',component:MasterDesignationComponent},
-  {path:'',redirectTo:'master-designation',pathMatch:'full'}
+  {path:'master-user',component:MasterUserComponent},
+  {path:'create-user',component:CreateUserComponent},
+  {path:'',redirectTo:'master-user',pathMatch:'full'}
 
 
 ];

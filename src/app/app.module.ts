@@ -16,6 +16,8 @@ import { MasterStateComponent } from './master-state/master-state.component';
 import { MasterDistrictComponent } from './master-district/master-district.component';
 import { MasterUserRoleComponent } from './master-user-role/master-user-role.component';
 import { MasterDesignationComponent } from './master-designation/master-designation.component';
+import { MasterUserComponent } from './master-user/master-user.component';
+import { CreateUserComponent } from './create-user/create-user.component';
 
 
 
@@ -29,7 +31,9 @@ import { MasterDesignationComponent } from './master-designation/master-designat
     MasterStateComponent,
     MasterDistrictComponent,
     MasterUserRoleComponent,
-    MasterDesignationComponent
+    MasterDesignationComponent,
+    MasterUserComponent,
+    CreateUserComponent
    
   ],
   imports: [
