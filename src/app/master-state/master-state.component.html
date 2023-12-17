@@ -13,7 +13,13 @@
             <label class="fw-bold">State Name</label>
             <input type="text" class="form-control" [(ngModel)]="searchState">
           </div>
+        </div><div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">State Code</label>
+            <input type="text" class="form-control" [(ngModel)]="searchStateCode">
+          </div>
         </div>
+
         <div class="col-md-6">
           <div class="form-group">
             <label class="fw-bold">Select Status</label>
@@ -39,6 +45,7 @@
           <tr>
             <th style="width: 10%;">S.No</th>
             <th>State Name</th>
+            <th>State Code</th>
             <th style="width: 15%;">Status</th>
             <th style="width: 20%;">Action</th>
           </tr>
@@ -49,6 +56,7 @@
                                                               totalItems: totalRecords };let i= index">
             <td>{{(currentPageNo-1)*10 + i+1}}</td>
             <td>{{data.stateName}}</td>
+            <td>{{data.stateCode}}</td>
             <td>{{data.activeFlag ? 'Active' : 'Inactive'}}</td>
             <td>
               <button (click)="edit(data.stateCode)" class="btn btn-sm btn-primary">Edit</button>
@@ -78,6 +86,12 @@
           <div class="form-group">
             <label class="fw-bold">State Name</label>
             <input type="text" class="form-control" [(ngModel)]="enteredState" placeholder="Enter State Name">
+          </div>
+        </div>
+        <div class="col-md-6 text-center">
+          <div class="form-group">
+            <label class="fw-bold">State Code</label>
+            <input type="text" class="form-control" [(ngModel)]="enteredStateCode" placeholder="Enter State Code">
           </div>
         </div>
       </div>

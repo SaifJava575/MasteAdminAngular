@@ -21,7 +21,8 @@ export class MasterStateComponent {
   enteredState: any = null;
   enteredStatus: String = "";
   stateDataByCode: any = null;
-
+  enteredStateCode:any=null;
+  searchStateCode:any=null;
   constructor(private stateService:MasterServiceService,private toaster:ToastrService){}
 
   ngOnInit() {
@@ -30,13 +31,20 @@ export class MasterStateComponent {
   }
 
   createState() {
-    if (this.enteredState != '' && this.enteredState != null) {
-      console.log(this.enteredState)
+    if (this.enteredState == null || this.enteredState == '') {
+      this.toaster.error('Please select State');
+      return;
+    }if (this.enteredStateCode == null || this.enteredStateCode == '') {
+      this.toaster.error('Please select State Code');
+      return;
+    }
+    else {
       let postData = {
         "activeFlag": true,
         "stateName": this.enteredState,
-        "createdBy": this.userId,
-        "updatedBy": this.userId
+        "createdBy": "1234",
+        "updatedBy": "1234",
+        "stateCode":this.enteredStateCode
       }
       console.log(postData)
       this.stateService.addState(postData).subscribe((res: any) => {
@@ -50,10 +58,10 @@ export class MasterStateComponent {
         }
       });
     }
-    else {
-      this.toaster.error('Please enter State Name')
-    }
+
   }
+
+
   searchBtn() {
     this.currentPageNo = 1;
     this.search();
@@ -62,6 +70,7 @@ export class MasterStateComponent {
   search() {
     let searchData = {
       "stateName": this.searchState,
+      "stateCode":this.searchStateCode,
       "activeFlag": this.searchStatus == 'true' ? true : this.searchStatus == 'false' ? false : null
     }
     console.log(searchData)
@@ -119,6 +128,7 @@ export class MasterStateComponent {
     this.searchStatus = "";
     this.enteredState = null;
     this.enteredStatus = "";
+    this.searchStateCode=null;
   }
 
   openModal() {

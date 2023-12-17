@@ -153,7 +153,7 @@ export class MasterDepotComponent {
       "zoneId": Number(this.searchZoneId),
       "headOfficeId": Number(this.searchHeadOffice),
       "activeFlag": this.selectedStatus == 'true' ? true : false,
-      "updatedBy": this.userId
+      "updatedBy": "4321"
     }
     console.log(postData)
     this.depotService.updateDepot(postData).subscribe((res: any) => {

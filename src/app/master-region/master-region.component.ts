@@ -59,8 +59,8 @@ export class MasterRegionComponent {
         "headOfficeId": Number(this.selectedHeadOffice),
         "zoneId": Number(this.selectedZone),
         "regionName": this.enteredRegionName,
-        "createdBy": this.userId,
-        "updatedBy": this.userId
+        "createdBy": "1234",
+        "updatedBy": "1234"
       }
       console.log(postData)
       this.regionService.addRegion(postData).subscribe((res: any) => {
