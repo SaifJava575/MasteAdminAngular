@@ -22,8 +22,7 @@ const routes: Routes = [
   {path:'master-designation',component:MasterDesignationComponent},
   {path:'master-user',component:MasterUserComponent},
   {path:'create-user',component:CreateUserComponent},
-  {path:'',redirectTo:'master-user',pathMatch:'full'}
-
+  { path:'consumable', loadChildren: () => import('./consumable/consumable.module').then(m => m.ConsumableModule) }
 
 ];
 
