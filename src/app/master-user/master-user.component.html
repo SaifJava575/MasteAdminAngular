@@ -1,1 +1,101 @@
-<p>master-user works!</p>
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header pt-0 pb-0" style="background: #E1E5E9;">
+      <h3 class="card-title">User Management</h3>
+    </div>
+    <div class="card-body">
+      <div class="col-12 text-end">
+        <button routerLink="/create-user" class="btn btn-primary btn-sm">Add New User</button>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Officer Name</label>
+            <input type="text" class="form-control" [(ngModel)]="searchOfficer" placeholder="Enter Officer Name">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select Designation</label>
+            <select class="form-select" [(ngModel)]="searchDesignation">
+              <option selected disabled value="">Select Designation</option>
+              <option *ngFor="let designation of masterDesignation" [value]="designation.designationId">
+                {{designation.designationName}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Email Id</label>
+            <input type="text" class="form-control" [(ngModel)]="searchEmail" placeholder="Enter Email Id">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Mobile No</label>
+            <input type="text" class="form-control" [(ngModel)]="searchMobile" placeholder="Enter Mobile No"
+              (keypress)="($event.charCode>=48 && $event.charCode<58)" maxlength="10">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Login Id</label>
+            <input type="text" class="form-control" [(ngModel)]="searchLoginId" placeholder="Enter Login Id"
+              (keypress)="$event.charCode!=32">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select Status</label>
+            <select class="form-select" [(ngModel)]="searchStatus">
+              <option selected disabled value="">Select Status</option>
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row text-center mt-4">
+        <div class="col-12">
+          <button class="btn btn-primary" (click)="searchBtn()">Search</button>&nbsp;&nbsp;
+          <button class="btn btn-success" (click)="reset()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 p-3" style="overflow: auto; margin-bottom: 50px;">
+      <table class="table table-bordered text-center">
+        <thead class="thead-light" style="background: #9BADC5;">
+          <tr>
+            <th style="width: 5%;">S.No</th>
+            <th>Officer Name</th>
+            <th>Email Id</th>
+            <th>Login Id</th>
+            <th>Designation</th>
+            <th style="width: 10%;">Status</th>
+            <th style="width: 10%;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of masterUser | paginate: {itemsPerPage: pageSize,
+                                                              currentPage: currentPageNo,
+                                                              totalItems: totalRecords };let i= index">
+            <td>{{(currentPageNo-1)*10 + i+1}}</td>
+            <td>{{data.name}}</td>
+            <td>{{data.email}}</td>
+            <td>{{data.loginId}}</td>
+            <td>{{data.designationName}}</td>
+            <td>{{data.activeFlag ? 'Active' : 'Inactive'}}</td>
+            <td>
+              <button (click)="edit(data.userId)" class="btn btn-sm btn-primary">Edit</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="container text-center">
+        <pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>
