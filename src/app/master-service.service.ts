@@ -324,6 +324,25 @@ deleteUserJurisdiction(mappingId :any): Observable<any> {
   }), catchError(this.errorHandler));
 }
 
+//--------------------Master Unit Api Integreted --------------------
+addUnit(data: any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/add-unit`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+searchUnit(data: any, page: number): Observable<any> {
+  return this.http.post(`${this.baseUrl}/searchunit/` + page, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+updateUnit(data: any): Observable<any> {
+  return this.http.put(`${this.baseUrl}/update-unit`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
   errorHandler(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
