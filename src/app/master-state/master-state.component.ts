@@ -88,6 +88,7 @@ export class MasterStateComponent {
     this.stateService.getStateByStateCode(stateCode).subscribe((data: any) => {
       this.stateDataByCode = data[0];
       this.enteredState = this.stateDataByCode.stateName;
+      this.enteredStateCode=this.stateDataByCode.stateCode;
       if (this.stateDataByCode.activeFlag) {
         this.enteredStatus = 'true';
       }
@@ -98,13 +99,22 @@ export class MasterStateComponent {
   }
 
   updateState() {
-    if (this.enteredState != '' && this.enteredState != null) {
+    if (this.enteredState == null || this.enteredState == '') {
+      this.toaster.error('Please select State');
+      return;
+    }
+    if (this.enteredStateCode == null || this.enteredStateCode == '') {
+      this.toaster.error('Please select StateCode');
+      return;
+    }
+    else  {
       console.log(this.enteredState)
       let postData = {
-        "stateCode": this.stateDataByCode.stateCode,
+        "stateId": this.stateDataByCode.stateId,
+        "stateCode":this.enteredStateCode,
         "activeFlag": this.enteredStatus == 'true' ? true : false,
         "stateName": this.enteredState,
-        "updatedBy": this.userId
+        "updatedBy": "1234"
       }
       console.log(postData)
       this.stateService.updateState(postData).subscribe((res: any) => {
@@ -118,17 +128,15 @@ export class MasterStateComponent {
         }
       });
     }
-    else {
-      this.toaster.error('Please enter State Name')
-    }
+  
   }
-
   reset() {
     this.searchState = null;
     this.searchStatus = "";
     this.enteredState = null;
     this.enteredStatus = "";
     this.searchStateCode=null;
+    this.enteredStateCode=null;
   }
 
   openModal() {

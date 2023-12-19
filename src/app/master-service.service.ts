@@ -152,8 +152,8 @@ searchState(data :any, page: number): Observable<any> {
   }), catchError(this.errorHandler));
 }
 
-getStateByStateCode(stateCode :any): Observable<any> {
-  const params = new HttpParams().set('stateCode', stateCode);
+getStateByStateCode(stateId :any): Observable<any> {
+  const params = new HttpParams().set('stateId', stateId);
   return this.http.get(`${this.baseUrl}/get-state-by-id`, { params }).pipe(map((result: any) => {
     return result;
   }), catchError(this.errorHandler));
