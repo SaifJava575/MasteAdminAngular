@@ -132,6 +132,13 @@ updateDepot(data :any): Observable<any> {
   }), catchError(this.errorHandler));
 }
 
+getDepotByRegionId(regionId :any): Observable<any> {
+  const params = new HttpParams().set('regionId', regionId);
+  return this.http.get(`${this.baseUrl}/get-all-depot-by-region-id`, { params }).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
 //================== State Api Integreted =====================
 addState(data :any): Observable<any> {
   return this.http.post(`${this.baseUrl}/add-state`, data).pipe(map((result: any) => {
@@ -216,6 +223,12 @@ updateRole(data :any): Observable<any> {
   }), catchError(this.errorHandler));
 }
 
+getAllRole(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/get-all-role`).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
 // ----------------Master-Designation Api Integreted ----------------------------
 addDesignation(data :any): Observable<any> {
   return this.http.post(`${this.baseUrl}/create-designation`, data).pipe(map((result: any) => {
@@ -243,7 +256,73 @@ updateDesignation(data :any): Observable<any> {
   }), catchError(this.errorHandler));
 }
 
+getAllDesignation(): Observable<any> {
+  return this.http.get(`${this.baseUrl}/designation-list`).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
 
+//------------------- Master User Api Integreted -----------------------
+addUser(data :any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/save-user-details`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+getUserDetailsByUserId(userId :any): Observable<any> {
+  return this.http.get(`${this.baseUrl}/getUserDetails/` + userId).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+searchUser(data :any, page: number): Observable<any> {
+  return this.http.post(`${this.baseUrl}/searchuserdetailsforcreate/` + page, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+updateUser(data :any): Observable<any> {
+  return this.http.put(`${this.baseUrl}/update-user-details`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+//------------------ Master User Role Mapping Api Integreted ------------------
+addRoleToUser(data :any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/role-assignment`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+getUserRoles(userId :any): Observable<any> {
+  return this.http.get(`${this.baseUrl}/getuserrolemapping/` + userId).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+deleteUserRole(userId: any, roleId:any): Observable<any> {
+  return this.http.delete(`${this.baseUrl}/deleteUserRoleMapping/` + userId + "/" + roleId).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+//------------Master User Juricdiction Role Mapping Api Integreted --------------------
+addJurisdictionToUser(data :any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/saveUserJurisdictionMapping`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+getUserJurisdictions(userId :any): Observable<any> {
+  return this.http.get(`${this.baseUrl}/getUserJurisdictionMapping/` + userId).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+deleteUserJurisdiction(mappingId :any): Observable<any> {
+  const params = new HttpParams().set('mappingId', mappingId);
+  return this.http.delete(`${this.baseUrl}/deleteUserJurisdictionMapping`, { params }).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
 
   errorHandler(error: any) {
     let errorMessage = '';

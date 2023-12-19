@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +35,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
     MasterDesignationComponent,
     MasterUserComponent,
     CreateUserComponent
-   
+
   ],
   imports: [
     BrowserModule,
@@ -47,7 +48,8 @@ import { CreateUserComponent } from './create-user/create-user.component';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
-    NgxPaginationModule
+    NgxPaginationModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

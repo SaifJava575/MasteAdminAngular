@@ -1,1 +1,393 @@
-<p>create-user works!</p>
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header pt-0 pb-0" style="background: #E1E5E9;">
+      <h3 class="card-title">{{editFlag ? 'Update User' : 'Create User'}}</h3>
+    </div>
+    <div class="card-body">
+      <div class="w3-container">
+        <div *ngIf="!editUser">
+          <form [formGroup]="userForm">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="fw-bold">Officer Name</label>
+                  <input type="text" class="form-control" formControlName="name" placeholder="Enter Officer Name">
+                  <div class="col-12 text-left" *ngIf="userForm.controls['name'].errors">
+                    <span class="text-danger" *ngIf="submitted && userForm.controls['name'].errors['required']">
+                      This is required
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="fw-bold">Select Designation</label>
+                  <select class="form-select" formControlName="designationId">
+                    <option selected disabled value="">Select Designation</option>
+                    <option *ngFor="let designation of masterDesignation" [value]="designation.designationId">
+                      {{designation.designationName}}
+                    </option>
+                    <!-- <option *ngFor="let designation of masterDesignation"
+                      [value]="designation.designationId + '|' + designation.designationName">
+                      {{designation.designationName}}
+                    </option> -->
+                  </select>
+                  <div class="col-12 text-left" *ngIf="userForm.controls['designationId'].errors">
+                    <span class="text-danger"
+                      *ngIf="submitted && userForm.controls['designationId'].errors['required']">
+                      This is required
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="fw-bold">Email Id</label>
+                  <input type="text" class="form-control" formControlName="email" placeholder="Enter Email Id">
+                  <div class="col-12 text-left" *ngIf="userForm.controls['email'].errors">
+                    <span class="text-danger" *ngIf="submitted && userForm.controls['email'].errors['required']">
+                      This is required
+                    </span>
+                    <span class="text-danger" *ngIf="submitted && userForm.controls['email'].errors['pattern']">
+                      Invalid Email Id
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="fw-bold">Mobile No</label>
+                  <input type="text" class="form-control" formControlName="mobileNo" maxlength="10"
+                    (keypress)="($event.charCode>=48 && $event.charCode<58)" placeholder="Enter Mobile No">
+                  <div class="col-12 text-left" *ngIf="userForm.controls['mobileNo'].errors">
+                    <span class="text-danger" *ngIf="submitted && userForm.controls['mobileNo'].errors['required']">
+                      This is required
+                    </span>
+                    <span class="text-danger"
+                      *ngIf="submitted && userForm.controls['mobileNo'].errors['minlength'] || submitted && userForm.controls['mobileNo'].errors['maxlength'] || submitted && userForm.controls['mobileNo'].errors['pattern']">
+                      Invalid Mobile No
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="fw-bold">Login Id</label>
+                  <input type="text" class="form-control" formControlName="loginId" (keypress)="$event.charCode!=32"
+                    placeholder="Enter Login Id">
+                  <div class="col-12 text-left" *ngIf="userForm.controls['loginId'].errors">
+                    <span class="text-danger" *ngIf="submitted && userForm.controls['loginId'].errors['required']">
+                      This is required
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="editFlag" class="col-md-6">
+                <div class="form-group">
+                  <label class="fw-bold">Select Status</label>
+                  <select class="form-select" formControlName="activeFlag">
+                    <option selected disabled value="">Select Status</option>
+                    <option value="true">Active</option>
+                    <option value="false">Inactive</option>
+                  </select>
+                  <div class="col-12 text-left" *ngIf="userForm.controls['activeFlag'].errors">
+                    <span class="text-danger" *ngIf="submitted && userForm.controls['activeFlag'].errors['required']">
+                      This is required
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-md-6">
+                <div class="form-group">
+                  <label class="fw-bold">Select State</label>
+                  <select class="form-select" formControlName="stateCode">
+                    <option selected disabled value="">Select State</option>
+                    <option *ngFor="let state of masterState" [value]="state.stateCode">
+                      {{state.stateName}}
+                    </option>
+                  </select>
+                  <div class="col-12 text-left" *ngIf="userForm.controls['stateCode'].errors">
+                    <span class="text-danger" *ngIf="submitted && userForm.controls['stateCode'].errors['required']">
+                      This is required
+                    </span>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </form>
+          <div class="row text-center mt-4">
+            <div class="col-12">
+              <button *ngIf="!editFlag" class="btn btn-primary" (click)="createUser()">Create User</button>&nbsp;&nbsp;
+              <button *ngIf="editFlag" class="btn btn-primary" (click)="updateUser()">Update User</button>&nbsp;&nbsp;
+              <button class="btn btn-primary" (click)="reset()">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="editUser">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="fw-bold">Officer Name</label>
+                <div class="form-control">{{userData.name}}</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="fw-bold">Designation</label>
+                <div class="form-control">{{userData.designationName}}</div>
+                <!-- <div class="form-control">{{userData.designationId.split('|')[1]}}</div> -->
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="fw-bold">Email Id</label>
+                <div class="form-control">{{userData.email}}</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="fw-bold">Mobile No</label>
+                <div class="form-control">{{userData.mobileNo}}</div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="fw-bold">Login Id</label>
+                <div class="form-control">{{userData.loginId}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>
+      </div>
+    </div>
+
+    <div class="col-md-12 p-3" style="overflow: auto; margin-bottom: 50px;">
+      <div class="row">
+        <div class="col-6">
+          <h4>Role Details</h4>
+        </div>
+        <div *ngIf="showAddRole" class="col-6 text-end">
+          <button (click)="openModal('R')" class="btn btn-primary btn-sm">Add Role</button>
+        </div>
+      </div>
+      <table class="table table-bordered text-center">
+        <thead class="thead-light" style="background: #9BADC5;">
+          <tr>
+            <th style="width: 10%;">S.No</th>
+            <th>Role</th>
+            <th style="width: 15%;">Status</th>
+            <th style="width: 20%;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of userRoleList | paginate: {itemsPerPage: pageSize,
+                                                              currentPage: currentPageNo,
+                                                              totalItems: totalRecords };let i= index">
+            <td>{{(currentPageNo-1)*10 + i+1}}</td>
+            <td>{{data.roleName}}</td>
+            <td>{{data.activeFlag ? 'Active' : 'Inactive'}}</td>
+            <td>
+              <!-- <button (click)="editRole(data)" class="btn btn-sm btn-primary">Edit</button> -->
+              <button (click)="deleteRole(data)" class="btn btn-sm btn-danger">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="container text-center">
+        <!-- <pagination-controls (pageChange)="pageChange($event)"></pagination-controls> -->
+      </div>
+    </div>
+
+    <div class="col-md-12 p-3" style="overflow: auto; margin-bottom: 50px;">
+      <div class="row">
+        <div class="col-6">
+          <h4>Jurisdiction Details</h4>
+        </div>
+        <div *ngIf="showAddRole" class="col-6 text-end">
+          <button (click)="openModal('J')" class="btn btn-primary btn-sm">Add Jurisdiction</button>
+        </div>
+      </div>
+      <table class="table table-bordered text-center">
+        <thead class="thead-light" style="background: #9BADC5;">
+          <tr>
+            <th style="width: 5%;">S.No</th>
+            <th>Head Office Name</th>
+            <th>Zone Name</th>
+            <th>Region Name</th>
+            <th>Depot Name</th>
+            <th style="width: 10%;">Status</th>
+            <th style="width: 10%;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of userJurisdictionList | paginate: {itemsPerPage: pageSize,
+                                                              currentPage: currentPageNo,
+                                                              totalItems: totalRecords };let i= index">
+            <td>{{(currentPageNo-1)*10 + i+1}}</td>
+            <td>{{data.headOfficeName}}</td>
+            <td>{{data.zoneName}}</td>
+            <td>{{data.regionName}}</td>
+            <td>{{data.depotName}}</td>
+            <td>{{data.activeFlag ? 'Active' : 'Inactive'}}</td>
+            <td>
+              <button (click)="deleteJurisdiction(data)" class="btn btn-sm btn-danger">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="container text-center">
+        <!-- <pagination-controls (pageChange)="pageChange($event)"></pagination-controls> -->
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div [style.display]="showRoleModal" class="w3-modal w3-animate-zoom">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-blue">
+      <span (click)="closeRoleModal()" class="w3-button w3-large w3-display-topright">×</span>
+      <h3>Add Role</h3>
+    </header>
+    <br>
+    <div class="w3-container">
+      <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+          <div class="form-group">
+            <label class="fw-bold">Select Role</label>
+            <select class="form-select" [(ngModel)]="enteredRole">
+              <option selected disabled value="">Select Role</option>
+              <option *ngFor="let role of masterRole" [value]="role.roleId">
+                {{role.roleName}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row text-center mt-4 mb-4">
+        <div class="col-12">
+          <button class="btn btn-primary" (click)="addRoleToUser()">Add Role</button>&nbsp;&nbsp;
+          <button class="btn btn-primary" (click)="closeRoleModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div [style.display]="editModal" class="w3-modal w3-animate-zoom">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-blue">
+      <span (click)="closeModal()" class="w3-button w3-large w3-display-topright">×</span>
+      <h3>Update Role</h3>
+    </header>
+    <br>
+    <div class="w3-container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select Role</label>
+            <select class="form-select" [(ngModel)]="enteredRole">
+              <option selected disabled value="">Select Role</option>
+              <option *ngFor="let role of masterRole" [value]="role.roleId">
+                {{role.roleName}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select Status</label>
+            <select class="form-select" [(ngModel)]="enteredStatus">
+              <option selected="" disabled value="">Select Status</option>
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row text-center mt-4 mb-4">
+        <div class="col-12">
+          <button class="btn btn-primary" (click)="updateRole()">Update Role</button>&nbsp;&nbsp;
+          <button class="btn btn-primary" (click)="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+<div [style.display]="showJurisdictionModal" class="w3-modal w3-animate-zoom">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-blue">
+      <span (click)="closeJurisdictionModal()" class="w3-button w3-large w3-display-topright">×</span>
+      <h3>Add Jurisdiction</h3>
+    </header>
+    <br>
+    <div class="w3-container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Head Office Name</label>
+            <select class="form-select" (change)="getZoneByHeadOfficeId($event)" [(ngModel)]="enteredHeadOffice">
+              <option selected disabled value="">Select Head Office</option>
+              <option *ngFor="let headOffice of masterHeadOffice" [value]="headOffice.headOfficeId">
+                {{headOffice.headOfficeName}}
+              </option>
+              <option value=null>All</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Zone Name</label>
+            <select class="form-select" (change)="getRegionByZoneId($event)" [(ngModel)]="enteredZone">
+              <option selected disabled value="">Select Zone</option>
+              <option *ngFor="let zone of masterZone" [value]="zone.zoneId">
+                {{zone.zoneName}}
+              </option>
+              <option value=null>All</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Region Name</label>
+            <select class="form-select" (change)="getDepotByRegionId($event)" [(ngModel)]="enteredRegion">
+              <option selected disabled value="">Select Region</option>
+              <option *ngFor="let region of masterRegion" [value]="region.regionId">
+                {{region.regionName}}
+              </option>
+              <option value=null>All</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Depot Name</label>
+            <select class="form-select" [(ngModel)]="enteredDepot">
+              <option selected disabled value="">Select Depot</option>
+              <option *ngFor="let depot of masterDepot" [value]="depot.depotId">
+                {{depot.depotName}}
+              </option>
+              <option value=null>All</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row text-center mt-4 mb-4">
+        <div class="col-12">
+          <button class="btn btn-primary" (click)="addJurisdictionToUser()">Add Jurisdiction</button>&nbsp;&nbsp;
+          <button class="btn btn-primary" (click)="closeJurisdictionModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
