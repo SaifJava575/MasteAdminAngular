@@ -6,7 +6,7 @@ import { Observable ,map,catchError,throwError} from 'rxjs';
   providedIn: 'root'
 })
 export class MasterServiceService {
-  private baseUrl='http://localhost:5200/admin/';
+  private baseUrl='http://localhost:5200/admin';
   constructor(private http:HttpClient) { }
 
   /* ----------------Master Head Office Integreted----------------------------*/
