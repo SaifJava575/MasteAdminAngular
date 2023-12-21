@@ -19,6 +19,10 @@ import { MasterUserRoleComponent } from './master-user-role/master-user-role.com
 import { MasterDesignationComponent } from './master-designation/master-designation.component';
 import { MasterUserComponent } from './master-user/master-user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { FooterComponent } from './layout/footer/footer.component';
+import { MenuBarComponent } from './layout/menu-bar/menu-bar.component';
+import { ContentComponent } from './layout/content/content.component';
 
 
 
@@ -34,7 +38,11 @@ import { CreateUserComponent } from './create-user/create-user.component';
     MasterUserRoleComponent,
     MasterDesignationComponent,
     MasterUserComponent,
-    CreateUserComponent
+    CreateUserComponent,
+    HeaderComponent,
+    FooterComponent,
+    MenuBarComponent,
+    ContentComponent
 
   ],
   imports: [
