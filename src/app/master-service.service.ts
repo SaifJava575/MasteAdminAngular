@@ -191,8 +191,41 @@ getDistrictByDistrictCode(districtCode :any): Observable<any> {
   }), catchError(this.errorHandler));
 }
 
+getDistrictByStateCode(stateCode :any): Observable<any> {
+  const params = new HttpParams().set('stateCode', stateCode);
+  return this.http.get(`${this.baseUrl}/get-all-district-by-state-id`, { params }).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+
 updateDistrict(data :any): Observable<any> {
   return this.http.put(`${this.baseUrl}/update-district`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+// ====================Master Taluk Api ================
+searchTaluk(data :any, page: number): Observable<any> {
+  return this.http.post(`${this.baseUrl}/searchtaluk/` + page, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+addTaluk(data :any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/add-taluk`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+getTalukByTalukCode(talukCode :any): Observable<any> {
+  const params = new HttpParams().set('talukCode', talukCode);
+  return this.http.get(`${this.baseUrl}/get-all-taluk-by-id`, { params }).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+updateTaluk(data :any): Observable<any> {
+  return this.http.put(`${this.baseUrl}/update-taluk`, data).pipe(map((result: any) => {
     return result;
   }), catchError(this.errorHandler));
 }

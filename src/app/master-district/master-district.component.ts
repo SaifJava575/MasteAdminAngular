@@ -152,6 +152,6 @@ export class MasterDistrictComponent {
   pageChange(event: any) {
     console.log(event)
     this.currentPageNo = event;
-    //this.search();
+    this.search();
   }
 }

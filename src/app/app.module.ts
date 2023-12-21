@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select'; // Import NgSelectModule
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +25,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { MenuBarComponent } from './layout/menu-bar/menu-bar.component';
 import { ContentComponent } from './layout/content/content.component';
+import { MasterTalukComponent } from './master-taluk/master-taluk.component';
 
 
 
@@ -42,7 +45,8 @@ import { ContentComponent } from './layout/content/content.component';
     HeaderComponent,
     FooterComponent,
     MenuBarComponent,
-    ContentComponent
+    ContentComponent,
+    MasterTalukComponent
 
   ],
   imports: [
@@ -57,7 +61,8 @@ import { ContentComponent } from './layout/content/content.component';
       preventDuplicates: true,
     }),
     NgxPaginationModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
