@@ -26,6 +26,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { MenuBarComponent } from './layout/menu-bar/menu-bar.component';
 import { ContentComponent } from './layout/content/content.component';
 import { MasterTalukComponent } from './master-taluk/master-taluk.component';
+import { MasterVillageComponent } from './master-village/master-village.component';
 
 
 
@@ -46,7 +47,8 @@ import { MasterTalukComponent } from './master-taluk/master-taluk.component';
     FooterComponent,
     MenuBarComponent,
     ContentComponent,
-    MasterTalukComponent
+    MasterTalukComponent,
+    MasterVillageComponent
 
   ],
   imports: [

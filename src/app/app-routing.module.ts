@@ -12,6 +12,7 @@ import { MasterUserComponent } from './master-user/master-user.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { ContentComponent } from './layout/content/content.component';
 import { MasterTalukComponent } from './master-taluk/master-taluk.component';
+import { MasterVillageComponent } from './master-village/master-village.component';
 
 const routes: Routes = [
   { path: 'head-office', component: HeadofficeComponent },
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path:'create-user',component:CreateUserComponent},
   {path:'content',component:ContentComponent},
   {path:'master-taluk',component:MasterTalukComponent},
+  {path:'master-village',component:MasterVillageComponent},
   //{path:'',redirectTo:'master-region',pathMatch:'full'},
   { path:'consumable', loadChildren: () => import('./consumable/consumable.module').then(m => m.ConsumableModule) }
 

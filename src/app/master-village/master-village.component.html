@@ -1,0 +1,240 @@
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-header pt-0 pb-0" style="background: #E1E5E9;">
+      <h3 class="card-title">Master Village</h3>
+    </div>
+    <div class="card-body">
+      <div class="col-12 text-end">
+        <button (click)="openModal()" class="btn btn-primary btn-sm">Add New Village</button>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select State</label>
+            <ng-select placeholder="Select State" [(ngModel)]="searchStateCode"
+              (change)="getDistrictByStateCode($event)">
+              <ng-option *ngFor="let state of masterState" [value]="state.stateCode">
+                {{state.stateName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select District</label>
+            <ng-select placeholder="Select District" (change)="getTalukByDistrictCode($event)" [(ngModel)]="searchDistrictCode">
+              <ng-option *ngFor="let district of masterDistrict" [value]="district.districtCode">
+                {{district.districtName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select Taluk</label>
+            <ng-select placeholder="Select Taluk" [(ngModel)]="searchTalukCode">
+              <ng-option *ngFor="let taluk of masterSubDistrict" [value]="taluk.talukCode">
+                {{taluk.talukName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Village Name</label>
+            <input type="text" class="form-control" [(ngModel)]="searchVillage" placeholder="Enter Village Name">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select Status</label>
+            <select class="form-select" [(ngModel)]="searchStatus">
+              <option selected disabled value="">Select Status</option>
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row text-center mt-4">
+        <div class="col-12">
+          <button class="btn btn-primary" (click)="searchBtn()">Search</button>&nbsp;&nbsp;
+          <button class="btn btn-success" (click)="reset()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 p-3" style="overflow: auto; margin-bottom: 50px;">
+      <table class="table table-bordered text-center">
+        <thead class="thead-light" style="background: #9BADC5;">
+          <tr>
+            <th style="width: 10%;">S.No</th>
+            <th>State Name</th>
+            <th>District Name</th>
+            <th>Taluk Name</th>
+            <th>Village Name</th>
+            <th style="width: 15%;">Status</th>
+            <th style="width: 20%;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of masterVillageData | paginate: {itemsPerPage: pageSize,
+                                                              currentPage: currentPageNo,
+                                                              totalItems: totalRecords };let i= index">
+            <td>{{(currentPageNo-1)*10 + i+1}}</td>
+            <td>{{data.stateName}}</td>
+            <td>{{data.districtName}}</td>
+            <td>{{data.TalukName}}</td>
+            <td>{{data.VillageName}}</td>
+            <td>{{data.activeFlag ? 'Active' : 'Inactive'}}</td>
+            <td>
+              <button (click)="edit(data.villageCode)" class="btn btn-sm btn-primary">Edit</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="container text-center">
+        <pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div [style.display]="showModal" class="w3-modal w3-animate-zoom">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-blue">
+      <span (click)="closeModal()" class="w3-button w3-large w3-display-topright">×</span>
+      <h3>Add New Village</h3>
+    </header>
+    <br>
+    <div class="w3-container">
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select State</label>
+            <ng-select placeholder="Select State" [(ngModel)]="enteredstateCode"
+              (change)="getDistrictByStateCode($event)">
+              <ng-option *ngFor="let state of masterState" [value]="state.stateCode">
+                {{state.stateName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select District</label>
+            <ng-select placeholder="Select District" (change)="getTalukByDistrictCode($event)" [(ngModel)]="enteredDistrictCode">
+              <ng-option *ngFor="let district of masterDistrict" [value]="district.districtCode">
+                {{district.districtName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select Taluk</label>
+            <ng-select placeholder="Select Taluk" [(ngModel)]="enteredTalukCode">
+              <ng-option *ngFor="let taluk of masterSubDistrict" [value]="taluk.talukCode">
+                {{taluk.talukName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Village Name</label>
+            <input type="text" class="form-control" [(ngModel)]="enteredVillage" placeholder="Enter Village Name">
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row text-center mt-4 mb-4">
+        <div class="col-12">
+          <button class="btn btn-primary" (click)="createVillage()">Create Village</button>&nbsp;&nbsp;
+          <button class="btn btn-primary" (click)="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [style.display]="editModal" class="w3-modal w3-animate-zoom">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-blue">
+      <span (click)="closeModal()" class="w3-button w3-large w3-display-topright">×</span>
+      <h3>Update Village</h3>
+    </header>
+    <br>
+    <div class="w3-container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select State</label>
+            <ng-select placeholder="Select State" [(ngModel)]="enteredstateCode"
+              (change)="getDistrictByStateCode($event)">
+              <ng-option *ngFor="let state of masterState" [value]="state.stateCode">
+                {{state.stateName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select District</label>
+            <ng-select placeholder="Select District" (change)="getTalukByDistrictCode($event)" [(ngModel)]="enteredDistrictCode">
+              <ng-option *ngFor="let district of masterDistrict" [value]="district.districtCode">
+                {{district.districtName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select Taluk</label>
+            <ng-select placeholder="Select Taluk" [(ngModel)]="enteredTalukCode">
+              <ng-option *ngFor="let taluk of masterSubDistrict" [value]="taluk.talukCode">
+                {{taluk.talukName}}
+              </ng-option>
+            </ng-select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Village Name</label>
+            <input type="text" class="form-control" [(ngModel)]="enteredVillage" placeholder="Enter Village Name">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="fw-bold">Select Status</label>
+            <select class="form-select" [(ngModel)]="enteredStatus">
+              <option selected="" disabled value="">Select Status</option>
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row text-center mt-4 mb-4">
+        <div class="col-12">
+          <button class="btn btn-primary" (click)="updateTaluk()">Update District</button>&nbsp;&nbsp;
+          <button class="btn btn-primary" (click)="closeModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

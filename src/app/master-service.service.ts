@@ -224,8 +224,41 @@ getTalukByTalukCode(talukCode :any): Observable<any> {
   }), catchError(this.errorHandler));
 }
 
+getTalukByDistrictCode(districtCode :any): Observable<any> {
+  const params = new HttpParams().set('stateCode', districtCode);
+  return this.http.get(`${this.baseUrl}/get-all-taluk-by-taluk-id`, { params }).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
 updateTaluk(data :any): Observable<any> {
   return this.http.put(`${this.baseUrl}/update-taluk`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+// ============= Master Village Api Integreted ======================
+addVillage(data :any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/add-village`, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+searchVillage(data :any, page: number): Observable<any> {
+  return this.http.post(`${this.baseUrl}/searchVillage/` + page, data).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+getVillageByVillageCdoe(villageCdoe :any): Observable<any> {
+  const params = new HttpParams().set('villageCdoe', villageCdoe);
+  return this.http.get(`${this.baseUrl}/get-all-village-by-id`, { params }).pipe(map((result: any) => {
+    return result;
+  }), catchError(this.errorHandler));
+}
+
+updateVillage(data :any): Observable<any> {
+  return this.http.put(`${this.baseUrl}/update-village`, data).pipe(map((result: any) => {
     return result;
   }), catchError(this.errorHandler));
 }
