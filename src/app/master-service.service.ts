@@ -6,7 +6,7 @@ import { Observable ,map,catchError,throwError} from 'rxjs';
   providedIn: 'root'
 })
 export class MasterServiceService {
-  private baseUrl='http://localhost:5200/admin/';
+  private baseUrl='http://localhost:5200/admin';
   constructor(private http:HttpClient) { }
 
   /* ----------------Master Head Office Integreted----------------------------*/
@@ -173,7 +173,7 @@ getAllState(): Observable<any> {
 
 //============== District Api Inegreted ================
 addDistrict(data :any): Observable<any> {
-  return this.http.post(`${this.baseUrl}/add-district`, data).pipe(map((result: any) => {
+  return this.http.post(`${this.baseUrl}add-district`, data).pipe(map((result: any) => {
     return result;
   }), catchError(this.errorHandler));
 }
@@ -185,7 +185,7 @@ searchDistrict(data :any, page: number): Observable<any> {
 }
 
 getDistrictByDistrictCode(districtCode :any): Observable<any> {
-  const params = new HttpParams().set('districtCode', districtCode);
+  const params = new HttpParams().set('/districtCode', districtCode);
   return this.http.get(`${this.baseUrl}/get-all-district-by-id`, { params }).pipe(map((result: any) => {
     return result;
   }), catchError(this.errorHandler));
@@ -225,8 +225,8 @@ getTalukByTalukCode(talukCode :any): Observable<any> {
 }
 
 getTalukByDistrictCode(districtCode :any): Observable<any> {
-  const params = new HttpParams().set('stateCode', districtCode);
-  return this.http.get(`${this.baseUrl}/get-all-taluk-by-taluk-id`, { params }).pipe(map((result: any) => {
+  const params = new HttpParams().set('districtCode', districtCode);
+  return this.http.get(`${this.baseUrl}/get-all-taluk-by-district-id`, { params }).pipe(map((result: any) => {
     return result;
   }), catchError(this.errorHandler));
 }

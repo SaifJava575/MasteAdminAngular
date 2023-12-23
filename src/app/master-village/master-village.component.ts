@@ -144,8 +144,8 @@ export class MasterVillageComponent {
     this.villageService.getVillageByVillageCdoe(villageCode).subscribe((data: any) => {
       this.getVillageByVillageCode = data[0];
       this.enteredstateCode = this.getVillageByVillageCode.stateCode;
-      this.enteredDistrictCode = this.getVillageByVillageCode.districtCode;
-      this.enteredTalukCode = this.getVillageByVillageCode.talukCode;
+      this.enteredDistrictCode = this.getVillageByVillageCode.districtName;
+      this.enteredTalukCode = this.getVillageByVillageCode.talukName;
       this.enteredVillage=this.getVillageByVillageCode.villageName;
     });
   }
@@ -198,6 +198,9 @@ export class MasterVillageComponent {
     this.searchState = "";
     this.searchDistrict = null;
     this.searchStatus = "";
+    this.searchStateCode=null;
+    this.searchDistrictCode=null;
+    this.searchTalukCode=null;
     this.searchTaluk=null;
     this.searchVillage=null;
     this.enteredState = "";
