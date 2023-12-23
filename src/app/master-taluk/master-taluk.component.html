@@ -74,7 +74,7 @@
             <td>{{(currentPageNo-1)*10 + i+1}}</td>
             <td>{{data.stateName}}</td>
             <td>{{data.districtName}}</td>
-            <td>{{data.TalukName}}</td>
+            <td>{{data.talukName}}</td>
             <td>{{data.activeFlag ? 'Active' : 'Inactive'}}</td>
             <td>
               <button (click)="edit(data.talukCode)" class="btn btn-sm btn-primary">Edit</button>
@@ -146,7 +146,7 @@
   <div class="w3-modal-content w3-card-4">
     <header class="w3-container w3-blue">
       <span (click)="closeModal()" class="w3-button w3-large w3-display-topright">×</span>
-      <h3>Update District</h3>
+      <h3>Update Taluk</h3>
     </header>
     <br>
     <div class="w3-container">

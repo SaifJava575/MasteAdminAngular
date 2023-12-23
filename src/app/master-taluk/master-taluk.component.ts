@@ -123,7 +123,7 @@ export class MasterTalukComponent {
     this.talukService.getTalukByTalukCode(talukCode).subscribe((data: any) => {
       this.getTalukByTalukCode = data[0];
       this.enteredstateCode = this.getTalukByTalukCode.stateCode;
-      this.enteredDistrictCode = this.getTalukByTalukCode.districtCode;
+      this.enteredDistrictCode = this.getTalukByTalukCode.districtName;
       this.enteredTalukCode = this.getTalukByTalukCode.talukName;
     });
   }
@@ -146,7 +146,7 @@ export class MasterTalukComponent {
     else {
       let postData = {
         "talukCode": this.getTalukByTalukCode.talukCode,
-        "districtCode": this.enteredDistrictCode,
+        "districtCode": this.getTalukByTalukCode.districtCode,
         "stateCode": this.enteredstateCode,
         "talukName":this.enteredTalukCode,
         "activeFlag": this.enteredStatus == 'true' ? true : false,
@@ -168,7 +168,9 @@ export class MasterTalukComponent {
 
   reset() {
     this.searchState = "";
+    this.searchStateCode=null;
     this.searchDistrict = null;
+    this.searchDistrictCode=null;
     this.searchStatus = "";
     this.searchTaluk=null;
     this.enteredState = "";
