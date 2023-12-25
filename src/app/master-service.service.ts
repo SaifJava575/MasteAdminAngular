@@ -308,8 +308,8 @@ searchDesignation(data :any, page: number): Observable<any> {
   }), catchError(this.errorHandler));
 }
 
-getDesignationById(DesignationId :any): Observable<any> {
-  const params = new HttpParams().set('DesignationId', DesignationId);
+getDesignationById(designationId :any): Observable<any> {
+  const params = new HttpParams().set('designationId', designationId);
   return this.http.get(`${this.baseUrl}/get-all-designation-by-id`, { params }).pipe(map((result: any) => {
     return result;
   }), catchError(this.errorHandler));

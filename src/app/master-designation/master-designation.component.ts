@@ -54,7 +54,7 @@ export class MasterDesignationComponent {
       let postData = {
         "activeFlag": true,
         "designationName": this.enteredDesignation,
-        "createdBy": this.userId,
+        "createdBy": "1234",
         "updatedBy": this.userId
       }
       console.log(postData)
@@ -93,10 +93,10 @@ export class MasterDesignationComponent {
     if (this.enteredDesignation != '' && this.enteredDesignation != null) {
       console.log(this.enteredDesignation)
       let postData = {
-        "designationId": this.designationDataById.DesignationId,
+        "designationId": this.designationDataById.designationId,
         "activeFlag": this.enteredStatus == 'true' ? true : false,
         "designationName": this.enteredDesignation,
-        "updatedBy": this.userId
+        "updatedBy": "1234"
       }
       console.log(postData)
       this.designationService.updateDesignation(postData).subscribe((res: any) => {
