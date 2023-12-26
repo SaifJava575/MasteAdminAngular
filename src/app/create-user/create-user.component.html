@@ -82,6 +82,18 @@
                   </div>
                 </div>
               </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="fw-bold">Password</label>
+                  <input type="text" class="form-control" formControlName="password" 
+                    placeholder="Enter Password Id">
+                  <div class="col-12 text-left" *ngIf="userForm.controls['password'].errors">
+                    <span class="text-danger" *ngIf="submitted && userForm.controls['password'].errors['required']">
+                      This is required
+                    </span>
+                  </div>
+                </div>
+              </div>
               <div *ngIf="editFlag" class="col-md-6">
                 <div class="form-group">
                   <label class="fw-bold">Select Status</label>

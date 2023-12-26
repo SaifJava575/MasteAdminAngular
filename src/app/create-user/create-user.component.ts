@@ -48,6 +48,7 @@ export class CreateUserComponent {
       email: ["", [Validators.required, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       mobileNo: ["", [Validators.required, Validators.pattern('[6789][0-9]{9}'), Validators.minLength(10), Validators.maxLength(10)]],
       loginId: ["", Validators.required],
+      password: ["", Validators.required],
       activeFlag: [""]
     });
   }
@@ -75,14 +76,13 @@ export class CreateUserComponent {
     if (this.userForm.valid) {
       let postData = {
         "activeFlag": true,
-        "name": this.userForm.value.name,
-        // "designationId": this.userForm.value.designationId.split('|')[0],
+        "userName": this.userForm.value.name,
         "designationId": this.userForm.value.designationId,
         "email": this.userForm.value.email,
         "mobileNo": this.userForm.value.mobileNo,
         "loginId": this.userForm.value.loginId,
-        // "stateCode": this.userForm.value.stateCode,
-        "createdBy": this.userId,
+        "userPwd": this.userForm.value.password,
+        "createdBy": "1111",
         "updatedBy": this.userId
       }
       console.log(postData)

@@ -66,7 +66,7 @@ export class MasterUserComponent {
   search() {
     let searchData = {
       "activeFlag": this.searchStatus == 'true' ? true : this.searchStatus == 'false' ? false : null,
-      "name": this.searchOfficer,
+      "userName": this.searchOfficer,
       "designationId": this.searchDesignation,
       "email": this.searchEmail,
       "mobileNo": this.searchMobile,
