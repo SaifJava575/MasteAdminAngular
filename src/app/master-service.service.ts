@@ -359,8 +359,8 @@ addRoleToUser(data :any): Observable<any> {
   }), catchError(this.errorHandler));
 }
 
-getUserRoles(userId :any): Observable<any> {
-  return this.http.get(`${this.baseUrl}/getuserrolemapping/` + userId).pipe(map((result: any) => {
+getUserRoles(userId:any): Observable<any> {
+  return this.http.get(`${this.baseUrl}/getuserrolemapping/`+userId).pipe(map((result: any) => {
     return result;
   }), catchError(this.errorHandler));
 }

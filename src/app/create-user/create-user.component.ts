@@ -60,7 +60,7 @@ export class CreateUserComponent {
       this.editFlag = true;
       this.showAddRole = true;
      this.getUserDetails(this.createdUserId, "hide");
-      this.getUserRoles(this.createdUserId);
+      this.getUserRoles(this.userId);
       this.getUserJurisdiction(this.createdUserId);
       this.getAllHeadOffice();
       sessionStorage.removeItem("updateUserId");
@@ -109,8 +109,8 @@ export class CreateUserComponent {
   getUserDetails(userId: number, action: String) {
     this.userService.getUserDetailsByUserId(userId).subscribe((data: any) => {
       this.userData = data[0];
-      this.userForm.get('name')?.setValue(this.userData.name);
-      this.userForm.get('designationId')?.setValue(this.userData.DesignationId);
+      this.userForm.get('name')?.setValue(this.userData.userName);
+      this.userForm.get('designationId')?.setValue(this.userData.designationId);
       this.userForm.get('email')?.setValue(this.userData.email);
       this.userForm.get('mobileNo')?.setValue(this.userData.mobileNo);
       this.userForm.get('loginId')?.setValue(this.userData.loginId);
@@ -132,7 +132,7 @@ export class CreateUserComponent {
       let postData = {
         "userId": this.userData.userId,
         "activeFlag": this.userForm.value.activeFlag == 'true' ? true : false,
-        "name": this.userForm.value.name,
+        "userName": this.userForm.value.name,
         "designationId": this.userForm.value.designationId,
         "email": this.userForm.value.email,
         "mobileNo": this.userForm.value.mobileNo,
@@ -188,17 +188,17 @@ export class CreateUserComponent {
     }
   }
 
-  getUserRoles(userId: number) {
+  getUserRoles(userId:any) {
     this.userService.getUserRoles(userId).subscribe((data: any) => {
       this.userRoleList = data;
     });
   }
 
-  deleteRole(userData: any) {
-    this.userService.deleteUserRole(userData.userId, userData.roleId).subscribe((res: any) => {
+  deleteRole(userId: any,roleId:any) {
+    this.userService.deleteUserRole(userId, roleId).subscribe((res: any) => {
       if (res.status == 200) {
         this.toaster.success('UserRole deleted successfully');
-        this.getUserRoles(userData.userId);
+        this.getUserRoles(this.userId);
       }
     });
   }

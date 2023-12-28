@@ -141,7 +141,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="fw-bold">Officer Name</label>
-                <div class="form-control">{{userData.name}}</div>
+                <div class="form-control">{{userData.userName}}</div>
               </div>
             </div>
             <div class="col-md-6">
@@ -203,7 +203,7 @@
             <td>{{data.activeFlag ? 'Active' : 'Inactive'}}</td>
             <td>
               <!-- <button (click)="editRole(data)" class="btn btn-sm btn-primary">Edit</button> -->
-              <button (click)="deleteRole(data)" class="btn btn-sm btn-danger">Delete</button>
+              <button (click)="deleteRole(data.userId,data.roleId)" class="btn btn-sm btn-danger">Delete</button>
             </td>
           </tr>
         </tbody>
