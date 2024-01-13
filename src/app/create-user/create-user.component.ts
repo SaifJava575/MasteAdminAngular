@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { MasterServiceService } from '../master-service.service';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Route } from '@angular/router';
 
 @Component({
   selector: 'app-create-user',
@@ -26,6 +27,7 @@ export class CreateUserComponent {
   enteredStatus: String = "";
   userRoleList: any = null;
   userJurisdictionList: any = null;
+  // updateUserId: any;
   editUser: boolean = false;
   userData: any = null;
   createdUserId: any;
@@ -41,15 +43,16 @@ export class CreateUserComponent {
   enteredRegion: String = "";
   enteredDepot: String = "";
 
-  constructor(private fb:FormBuilder,private userService:MasterServiceService,private toaster:ToastrService){
+
+  constructor(private toaster: ToastrService, private userService: MasterServiceService, private fb: FormBuilder,private route:ActivatedRoute) {
     this.userForm = this.fb.group({
       name: ["", Validators.required],
       designationId: ["", Validators.required],
       email: ["", [Validators.required, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]],
       mobileNo: ["", [Validators.required, Validators.pattern('[6789][0-9]{9}'), Validators.minLength(10), Validators.maxLength(10)]],
       loginId: ["", Validators.required],
-      password: ["", Validators.required],
       activeFlag: [""]
+      // stateCode: ["", Validators.required],
     });
   }
 
@@ -59,30 +62,57 @@ export class CreateUserComponent {
       this.createdUserId = sessionStorage.getItem("updateUserId");
       this.editFlag = true;
       this.showAddRole = true;
-     this.getUserDetails(this.createdUserId, "hide");
-      this.getUserRoles(this.userId);
+      this.getUserDetails(this.createdUserId, "hide");
+      this.getUserRoles(this.createdUserId);
       this.getUserJurisdiction(this.createdUserId);
       this.getAllHeadOffice();
       sessionStorage.removeItem("updateUserId");
       this.userForm.get('activeFlag')?.setValidators(Validators.required);
     }
+    // this.getAllState();
     this.getAllDesignation();
     this.getAllRole();
   }
 
-  //---------------Master User Details -------------------------
+  // getAllState() {
+  //   this.userService.getAllState().subscribe((data: any) => {
+  //     this.masterState = data;
+  //   });
+  // }
+
+  getAllDesignation() {
+    this.userService.getAllDesignation().subscribe((data: any) => {
+      this.masterDesignation = data;
+    });
+  }
+
+  getAllRole() {
+    this.userService.getAllRole().subscribe((data: any) => {
+      this.masterRole = data;
+    });
+  }
+
+  reset() {
+    this.userForm.reset();
+    this.submitted = false;
+    this.enteredRole = "";
+    this.userForm.get('designationId')?.setValue("");
+    this.userForm.get('activeFlag')?.setValue("");
+  }
+
   createUser() {
     this.submitted = true;
     if (this.userForm.valid) {
       let postData = {
         "activeFlag": true,
-        "userName": this.userForm.value.name,
+        "name": this.userForm.value.name,
+        // "designationId": this.userForm.value.designationId.split('|')[0],
         "designationId": this.userForm.value.designationId,
         "email": this.userForm.value.email,
         "mobileNo": this.userForm.value.mobileNo,
         "loginId": this.userForm.value.loginId,
-        "userPwd": this.userForm.value.password,
-        "createdBy": "1111",
+        // "stateCode": this.userForm.value.stateCode,
+        "createdBy": this.userId,
         "updatedBy": this.userId
       }
       console.log(postData)
@@ -106,55 +136,33 @@ export class CreateUserComponent {
     }
   }
 
-  getUserDetails(userId: number, action: String) {
-    this.userService.getUserDetailsByUserId(userId).subscribe((data: any) => {
-      this.userData = data[0];
-      this.userForm.get('name')?.setValue(this.userData.userName);
-      this.userForm.get('designationId')?.setValue(this.userData.designationId);
-      this.userForm.get('email')?.setValue(this.userData.email);
-      this.userForm.get('mobileNo')?.setValue(this.userData.mobileNo);
-      this.userForm.get('loginId')?.setValue(this.userData.loginId);
-      if (this.userData.activeFlag) {
-        this.userForm.get('activeFlag')?.setValue("true");
-      }
-      else {
-        this.userForm.get('activeFlag')?.setValue("false");
-      }
-      if (action == "show") {
-        this.editUser = true;
-      }
-    });
-  }
-
-  updateUser() {
-    this.submitted = true;
-    if (this.userForm.valid) {
-      let postData = {
-        "userId": this.userData.userId,
-        "activeFlag": this.userForm.value.activeFlag == 'true' ? true : false,
-        "userName": this.userForm.value.name,
-        "designationId": this.userForm.value.designationId,
-        "email": this.userForm.value.email,
-        "mobileNo": this.userForm.value.mobileNo,
-        "loginId": this.userForm.value.loginId,
-        "updatedBy": this.userId
-      }
-      console.log(postData)
-      this.userService.updateUser(postData).subscribe((res: any) => {
-        if (res.status == 200) {
-          this.userData = postData;
-          this.toaster.success(res.message);
-          this.createdUserId = this.userData.userId;
-          this.getUserDetails(this.createdUserId, "show");
-        }
-        else {
-          this.toaster.error('Some error occurred.');
-        }
-      });
+  openModal(type: String) {
+    if (type == 'R') {
+      this.showRoleModal = 'block';
+    }
+    if (type == 'J') {
+      this.showJurisdictionModal = 'block';
     }
   }
 
-  //--------------- Master user Role Mapping ----------------------
+  closeRoleModal() {
+    this.showRoleModal = 'none';
+    this.showJurisdictionModal = 'none';
+    this.enteredRole = "";
+  }
+
+  closeJurisdictionModal() {
+    this.showRoleModal = 'none';
+    this.showJurisdictionModal = 'none';
+    this.masterZone = null;
+    this.masterRegion = null;
+    this.masterDepot = null;
+    this.enteredHeadOffice = "";
+    this.enteredZone = "";
+    this.enteredRegion = "";
+    this.enteredDepot = "";
+  }
+
   addRoleToUser() {
     if (this.enteredRole == null || this.enteredRole == '') {
       this.toaster.error('Please select Role');
@@ -176,7 +184,7 @@ export class CreateUserComponent {
         if (res.status == 200) {
           this.toaster.success(res.message);
           this.closeRoleModal();
-         this.getUserRoles(this.createdUserId);
+          this.getUserRoles(this.createdUserId);
         }
         else if (res.status == 304) {
           this.toaster.error('This role already exists. Please select another');
@@ -188,22 +196,6 @@ export class CreateUserComponent {
     }
   }
 
-  getUserRoles(userId:any) {
-    this.userService.getUserRoles(userId).subscribe((data: any) => {
-      this.userRoleList = data;
-    });
-  }
-
-  deleteRole(userId: any,roleId:any) {
-    this.userService.deleteUserRole(userId, roleId).subscribe((res: any) => {
-      if (res.status == 200) {
-        this.toaster.success('UserRole deleted successfully');
-        this.getUserRoles(this.userId);
-      }
-    });
-  }
-
-  //--------------Master User Juridiction Mapping ----------------------
   addJurisdictionToUser() {
     if (this.enteredHeadOffice == '') {
       this.toaster.error('Please select Head Office');
@@ -249,9 +241,114 @@ export class CreateUserComponent {
     }
   }
 
+  getUserRoles(userId: number) {
+    this.userService.getUserRoles(userId).subscribe((data: any) => {
+      this.userRoleList = data;
+    });
+  }
+
   getUserJurisdiction(userId: number) {
     this.userService.getUserJurisdictions(userId).subscribe((data: any) => {
       this.userJurisdictionList = data;
+    });
+  }
+
+  // editRole(userRoleData: any) {
+  //   this.editModal = 'block';
+  //   console.log(userRoleData)
+  //   this.createdUserId = userRoleData.userId;
+  //   this.enteredRole = userRoleData.roleId;
+  //   if (userRoleData.activeFlag) {
+  //     this.enteredStatus = 'true';
+  //   }
+  //   else {
+  //     this.enteredStatus = 'false';
+  //   }
+  // }
+
+  // updateRole() {
+  //   if (this.enteredRole != '' && this.enteredRole != null) {
+  //     let roleData = {
+  //       "roleId": this.enteredRole,
+  //       "userId": this.createdUserId
+  //     }
+  //     let postData = {
+  //       "activeFlag": this.enteredStatus == 'true' ? true : false,
+  //       "id": roleData,
+  //       "updatedBy": this.userId
+  //     }
+  //     console.log(postData)
+  //     this.userService.updateUserRole(postData).subscribe((res: any) => {
+  //       if (res.status == 200) {
+  //         this.toaster.success(res.message);
+  //         this.closeModal();
+  //         this.getUserRoles(this.createdUserId);
+  //       }
+  //       else {
+  //         this.toaster.error('Some error occurred.');
+  //       }
+  //     });
+  //   }
+  //   else {
+  //     this.toaster.error('Please enter State Name')
+  //   }
+  // }
+
+  getUserDetails(userId: number, action: String) {
+    this.userService.getUserDetailsByUserId(userId).subscribe((data: any) => {
+      this.userData = data[0];
+      this.userForm.get('name')?.setValue(this.userData.name);
+      this.userForm.get('designationId')?.setValue(this.userData.DesignationId);
+      this.userForm.get('email')?.setValue(this.userData.email);
+      this.userForm.get('mobileNo')?.setValue(this.userData.mobileNo);
+      this.userForm.get('loginId')?.setValue(this.userData.loginId);
+      if (this.userData.activeFlag) {
+        this.userForm.get('activeFlag')?.setValue("true");
+      }
+      else {
+        this.userForm.get('activeFlag')?.setValue("false");
+      }
+      if (action == "show") {
+        this.editUser = true;
+      }
+    });
+  }
+
+  updateUser() {
+    this.submitted = true;
+    if (this.userForm.valid) {
+      let postData = {
+        "userId": this.userData.userId,
+        "activeFlag": this.userForm.value.activeFlag == 'true' ? true : false,
+        "name": this.userForm.value.name,
+        "designationId": this.userForm.value.designationId,
+        "email": this.userForm.value.email,
+        "mobileNo": this.userForm.value.mobileNo,
+        "loginId": this.userForm.value.loginId,
+        "updatedBy": this.userId
+      }
+      console.log(postData)
+      this.userService.updateUser(postData).subscribe((res: any) => {
+        if (res.status == 200) {
+          this.userData = postData;
+          this.toaster.success(res.message);
+          // this.editUser = true;
+          this.createdUserId = this.userData.userId;
+          this.getUserDetails(this.createdUserId, "show");
+        }
+        else {
+          this.toaster.error('Some error occurred.');
+        }
+      });
+    }
+  }
+
+  deleteRole(userData: any) {
+    this.userService.deleteUserRole(userData.userId, userData.roleId).subscribe((res: any) => {
+      if (res.status == 200) {
+        this.toaster.success('UserRole deleted successfully');
+        this.getUserRoles(userData.userId);
+      }
     });
   }
 
@@ -265,23 +362,12 @@ export class CreateUserComponent {
     });
   }
 
-  // -------------Master Api -------------------
-  getAllDesignation() {
-    this.userService.getAllDesignation().subscribe((data: any) => {
-      this.masterDesignation = data;
-    });
-  }
-  getAllRole() {
-    this.userService.getAllRole().subscribe((data: any) => {
-      this.masterRole = data;
-    });
-  }
-
   getAllHeadOffice() {
     this.userService.getAllHeadOffice().subscribe((data: any) => {
       this.masterHeadOffice = data;
     });
   }
+
   getZoneByHeadOfficeId(event: any) {
     console.log(event.target.value);
     if (event.target.value != 'null') {
@@ -307,6 +393,7 @@ export class CreateUserComponent {
       });
     }
   }
+
   getDepotByRegionId(event: any) {
     console.log(event.target.value);
     if (event.target.value != 'null') {
@@ -316,39 +403,4 @@ export class CreateUserComponent {
       });
     }
   }
-  reset() {
-    this.userForm.reset();
-    this.submitted = false;
-    this.enteredRole = "";
-    this.userForm.get('designationId')?.setValue("");
-    this.userForm.get('activeFlag')?.setValue("");
-  }
-
-  openModal(type: String) {
-    if (type == 'R') {
-      this.showRoleModal = 'block';
-    }
-    if (type == 'J') {
-      this.showJurisdictionModal = 'block';
-    }
-  }
-
-  closeRoleModal() {
-    this.showRoleModal = 'none';
-    this.showJurisdictionModal = 'none';
-    this.enteredRole = "";
-  }
-
-  closeJurisdictionModal() {
-    this.showRoleModal = 'none';
-    this.showJurisdictionModal = 'none';
-    this.masterZone = null;
-    this.masterRegion = null;
-    this.masterDepot = null;
-    this.enteredHeadOffice = "";
-    this.enteredZone = "";
-    this.enteredRegion = "";
-    this.enteredDepot = "";
-  }
-
 }
