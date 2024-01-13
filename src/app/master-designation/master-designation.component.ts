@@ -118,7 +118,7 @@ export class MasterDesignationComponent {
   reset() {
     this.searchDesignation = null;
     this.searchStatus = "";
-    this.enteredDesignation = null;
+    this.enteredDesignation = "";
     this.enteredStatus = "";
   }
 

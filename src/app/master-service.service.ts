@@ -173,7 +173,7 @@ getAllState(): Observable<any> {
 
 //============== District Api Inegreted ================
 addDistrict(data :any): Observable<any> {
-  return this.http.post(`${this.baseUrl}add-district`, data).pipe(map((result: any) => {
+  return this.http.post(`${this.baseUrl}/add-district`, data).pipe(map((result: any) => {
     return result;
   }), catchError(this.errorHandler));
 }
